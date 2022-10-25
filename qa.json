@@ -1,0 +1,235 @@
+[
+    {
+        "qs": "Let's <span class='ba-cham'>...</span> hello to the teacher",
+        "da": "go",
+        "db": "say",
+        "dc": "know",
+        "dd": "to",
+        "as": "say"
+    },
+    {
+        "qs": "There is <span class='ba-cham'>...</span> dog in my house",
+        "da": "a",
+        "db": "an",
+        "dc": "to",
+        "dd": "is",
+        "as": "a"
+    },
+    {
+        "qs": "Give <span class='ba-cham'>...</span> a pen, please.",
+        "da": "my",
+        "db": "mine",
+        "dc": "me",
+        "dd": "I",
+        "as": "me"
+    },
+    {
+        "qs": "I <span class='ba-cham'>...</span> reading a book.",
+        "da": "is",
+        "db": "are",
+        "dc": "am",
+        "dd": "and",
+        "as": "am"
+    },
+    {
+        "qs": "This cake <span class='ba-cham'>...</span> for you, Mary. – Thank you very much.",
+        "da": "is",
+        "db": "are",
+        "dc": "a",
+        "dd": "an",
+        "as": "is"
+    },
+    {
+        "qs": "Tommy is my friend. He is a <span class='ba-cham'>...</span> at Quang Trung Primary School.",
+        "da": "worker",
+        "db": "doctor",
+        "dc": "farmer",
+        "dd": "student",
+        "as": "student"
+    },
+    {
+        "qs": "Her house is <span class='ba-cham'>...</span> big",
+        "da": "very",
+        "db": "much",
+        "dc": "many",
+        "dd": "more",
+        "as": "very"
+    },
+    {
+        "qs": "Yoko is <span class='ba-cham'>...</span> Japan.",
+        "da": "at",
+        "db": "on",
+        "dc": "from",
+        "dd": "to",
+        "as": "from"
+    },
+    {
+        "qs": "August is the eighth month <span class='ba-cham'>...</span> the year.",
+        "da": "by",
+        "db": "on",
+        "dc": "of",
+        "dd": "from",
+        "as": "of"
+    },
+    {
+        "qs": "Draw <span class='ba-cham'>...</span> picture, please.",
+        "da": "a",
+        "db": "an",
+        "dc": "of",
+        "dd": "at",
+        "as": "a"
+    },
+    {
+        "qs": "I <span class='ba-cham'>...</span> watching television.",
+        "da": "is",
+        "db": "am",
+        "dc": "on",
+        "dd": "at",
+        "as": "am"
+    },
+    {
+        "qs": "There <span class='ba-cham'>...</span> two boys in my class.",
+        "da": "is",
+        "db": "are",
+        "dc": "many",
+        "dd": "much",
+        "as": "are"
+    },
+    {
+        "qs": "My birthday is <span class='ba-cham'>...</span> May 5th.",
+        "da": "in",
+        "db": "on",
+        "dc": "of",
+        "dd": "from",
+        "as": "on"
+    },
+    {
+        "qs": "Hello, <span class='ba-cham'>...</span> Sean",
+        "da": "I",
+        "db": "I am",
+        "dc": "my name",
+        "dd": "I name",
+        "as": "I am"
+    },
+    {
+        "qs": "I can <span class='ba-cham'>...</span> a bicycle.",
+        "da": "rides",
+        "db": "riding",
+        "dc": "ride",
+        "dd": "am ride",
+        "as": "ride"
+    },
+    {
+        "qs": "How <span class='ba-cham'>...</span> desks are there in your classroom?",
+        "da": "much",
+        "db": "many",
+        "dc": "of",
+        "dd": "number",
+        "as": "many"
+    },
+    {
+        "qs": "I <span class='ba-cham'>...</span> two cats",
+        "da": "have",
+        "db": "has",
+        "dc": "am",
+        "dd": "are",
+        "as": "have"
+    },
+    {
+        "qs": "I'm from England. – I'm from England,<span class='ba-cham'>...</span>",
+        "da": "too",
+        "db": "you",
+        "dc": "and",
+        "dd": "my",
+        "as": "too"
+    },
+    {
+        "qs": "Thank you very much. – You <span class='ba-cham'>...</span> welcome.",
+        "da": "to",
+        "db": "are",
+        "dc": "very",
+        "dd": "and",
+        "as": "are"
+    },
+    {
+        "qs": "What <span class='ba-cham'>...</span> is it? – It's white.",
+        "da": "black",
+        "db": "time",
+        "dc": "color",
+        "dd": "happen",
+        "as": "color"
+    },
+    {
+        "qs": "He can <span class='ba-cham'>...</span> the piano very well.",
+        "da": "sings",
+        "db": "sing",
+        "dc": "plays",
+        "dd": "play",
+        "as": "plays"
+    },
+    {
+        "qs": "<span class='ba-cham'>...</span> does your sister do? – She is a nurse.",
+        "da": "How",
+        "db": "What",
+        "dc": "Where",
+        "dd": "When",
+        "as": "What"
+    },
+    {
+        "qs": "His brother is small <span class='ba-cham'>...</span> he is strong .",
+        "da": "and",
+        "db": "so",
+        "dc": "but",
+        "dd": "of",
+        "as": "but"
+    },
+    {
+        "qs": "Would you like some orange juice? - <span class='ba-cham'>...</span> ?",
+        "da": "No problem !",
+        "db": "You're welcome !",
+        "dc": "Yes I do !",
+        "dd": "I'd love to !",
+        "as": "I'd love to !"
+    },
+    {
+        "qs": "What day is <span class='ba-cham'>...</span> today?",
+        "da": "look",
+        "db": "it",
+        "dc": "come",
+        "dd": "play",
+        "as": "it"
+    },
+    {
+        "qs": "What do you do <span class='ba-cham'>...</span> Fridays? – I go to school in the morning.",
+        "da": "at",
+        "db": "on",
+        "dc": "in",
+        "dd": "of",
+        "as": "on"
+    },
+    {
+        "qs": "<span class='ba-cham'>...</span> to meet you, too.",
+        "da": "See",
+        "db": "Nice",
+        "dc": "I",
+        "dd": "Hello",
+        "as": "Nice"
+    },
+    {
+        "qs": "What do you do? I'm <span class='ba-cham'>...</span>",
+        "da": "watching",
+        "db": "play",
+        "dc": "from",
+        "dd": "student",
+        "as": "student"
+    },
+    {
+        "qs": "Thank you so much. – <span class='ba-cham'>...</span>",
+        "da": "Yes I do",
+        "db": "I am well",
+        "dc": "You are welcome",
+        "dd": "Thank you too",
+        "as": "You are welcome"
+    }
+    
+]

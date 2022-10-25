@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT"
+      crossorigin="anonymous"
+    />
+    <title>Đăng nhập hệ thống thi</title>
+    <link rel="stylesheet" href="./style.css" />
+    <script>
+      if (localStorage.getItem("user")) {
+        alert("Bạn đăng nhập rồi, vào thi thôi !!");
+        location.href = "./thi.html";
+      }
+    </script>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg border-bottom">
+      <div class="container">
+        <button
+          class="navbar-brand border-0 bg-transparent"
+          onclick="javascript:window.location.href=window.location.href"
+        >
+          <img src="/logo.png" width="60px" alt="Logo" />
+        </button>
+        <div class="fw-semibold">HỆ THỐNG THI TRỰC TUYẾN</div>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page">Trang chủ</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/thi.html">Nội quy</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <main class="container mt-3">
+      <section class="row align-items-center">
+        <article class="col-12 col-lg-8 col-md-7">
+          <div class="thi-noiquy">
+            <div class="noiquy-title fs-5 fw-semibold">Thủ tục</div>
+            <div class="noiquy-content">
+              <p>
+                - Khi đến dự thi, thí sinh cần mang đầy đủ giấy tờ theo đúng quy
+                đinh: biên lai nộp lệ phí thi, thẻ sinh viên, bằng lái xe hoặc
+                chứng minh thư nhân dân,...
+              </p>
+              <p>
+                - Thí sinh sẽ không được dự thi nếu không mang theo các giấy tờ
+                như yêu cầu.
+              </p>
+            </div>
+            <div class="noiquy-title fs-5 fw-semibold">Cách thức thi</div>
+
+            <div class="noiquy-content">
+              <p>
+                - Thí sinh đăng nhập tài khoản (phiếu tài khoản được phát tại
+                phòng thi) để thực hiện làm bài thi trên máy tính.
+              </p>
+              <p>
+                - Thí sinh không thể cố tình làm lại bài thi từ đầu, chẳng hạn
+                bằng cách đăng nhập lại từ đầu hoặc bằng bất cứ cách nào. Trong
+                khi thi, nếu thí sinh gặp sự cố máy tính hay những bất thường
+                khác thì cần phải báo ngay cho cán bộ coi thi
+              </p>
+              <p>
+                - Trước khi ra khỏi phòng thi, thí sinh phải nộp lại phiếu đăng
+                nhập và ký vào danh sách thi.
+              </p>
+            </div>
+          </div>
+        </article>
+
+        <article class="col-12 col-lg-4 col-md-5">
+          <div class="login border border-secondary rounded p-4">
+            <div class="login-title text-center fs-5 fw-semibold mb-3">
+              Đăng nhập hệ thống
+            </div>
+            <form class="row g-3">
+              <div class="col-md-12">
+                <label for="inputUser4" class="form-label">Tài khoản</label>
+                <input type="text" class="form-control" id="inputUser" />
+              </div>
+              <div class="col-md-12">
+                <label for="inputPassword4" class="form-label">Mật khẩu</label>
+                <input
+                  type="password"
+                  class="form-control"
+                  id="inputPassword4"
+                />
+              </div>
+              <div class="d-grid col-md-6 mx-auto">
+                <input
+                  type="submit"
+                  class="btn btn-primary"
+                  value="Đăng nhập"
+                />
+              </div>
+            </form>
+          </div>
+        </article>
+      </section>
+    </main>
+    <div class="ketqua"></div>
+    <script>
+      let username = document.querySelector("input[type=text]");
+      username.focus();
+      let password = document.querySelector("input[type=password]");
+      let btnSubmit = document.querySelector("input[type=submit]");
+      let urlUsers = "./users.json";
+
+      document.getElementsByClassName("ketqua")[0].innerHTML = `
+        <div id="myModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header bg-info">
+                    <strong class="mx-auto">Thông báo</strong>
+                    <span class="close">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <p></p>
+                </div>
+            </div>
+        </div>
+        `;
+
+      var modal = document.getElementById("myModal");
+      var modalContent = document.getElementsByClassName("modal-content")[0];
+      var modalBody = document.getElementsByClassName("modal-body")[0];
+      var closeBtn = document.getElementsByClassName("close")[0];
+      if (closeBtn) {
+        closeBtn.onclick = function () {
+          modal.style.display = "none";
+        };
+      }
+
+      btnSubmit.onclick = (e) => {
+        e.preventDefault();
+        if (username.value == "" || password.value == "") {
+          modalBody.innerHTML = "Không được bỏ trống ô nhập";
+          modal.style.display = "block";
+          setTimeout(() => {
+            modal.style.display = "none";
+          }, 2000);
+        } else {
+          fetch(urlUsers)
+            .then((respond) => respond.json())
+            .then((data) => {
+              let userArr = [];
+              let loginCheck = data.find((obj, i) => {
+                if (obj["username"] === username.value) {
+                  if (obj.password === password.value) {
+                    console.log("abc");
+                    modalBody.textContent = "Đăng nhập thành công";
+                    modal.style.display = "block";
+                    localStorage.setItem("user", username.value);
+                    setTimeout(() => {
+                      location.href = "./thi.html";
+                    }, 2000);
+                  } else {
+                    modalBody.innerHTML = "Nhập sai tài khoản hoặc mật khẩu 1";
+                    modal.style.display = "block";
+                    setTimeout(() => {
+                      modal.style.display = "none";
+                    }, 2000);
+                  }
+                } else {
+                }
+              });
+            });
+        }
+      };
+    </script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

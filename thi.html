@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="./style.css" />
+    <script src="./script.js"></script>
+    <script>
+      if (!localStorage.getItem("user")) {
+        alert("Bạn cần đăng nhập để vào thi !!");
+        location.href = "./index.html";
+      }
+    </script>
+    <title>Thi trực tuyến</title>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg border-bottom">
+      <div class="container justify-content-between">
+        <button
+          class="navbar-brand border-0 bg-transparent"
+          onclick="javascript:window.location.href=window.location.href"
+        >
+          <img src="/logo.png" width="60px" alt="Logo" />
+        </button>
+        <div class="fw-semibold">HỆ THỐNG THI TRỰC TUYẾN</div>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto align-items-end">
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="/">Trang chủ</a>
+            </li>
+            <li class="nav-item">
+              <span class="nav-link active" aria-current="page">Nội quy</span>
+            </li>
+            <li class="nav-item">
+              <span class="nav-link logout" href="/logout.html"
+                >Chào
+                <span class="fw-semibold"
+                  ><script>
+                    document.write(localStorage.getItem("user"));
+                  </script></span
+                >
+                [Đăng xuất]</span
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <main class="baithi container">
+      <section class="baithi-noiquy col-12 col-md-10 col-lg-10 mx-auto mt-3">
+        <div class="card my-3">
+          <div class="card-header">Làm bài thi</div>
+          <div class="card-body">
+            <p class="card-text">
+              - Bài thi được tính ngay sau khi ấn nút Bắt đầu
+            </p>
+            <p class="card-text">
+              - Thí sinh có tổng thời gian 15 giây để trả lời 3 câu hỏi (5s/câu)
+            </p>
+            <p class="card-text">
+              - Không được thoát ra hoặc load lại trang khi làm bài
+            </p>
+            <p class="card-text">
+              - Bài thi sẽ không được tính nếu thoát giữa chừng
+            </p>
+            <p class="card-text">
+              - Sau khi hết thời gian, kết quả sẽ vẫn được tính dựa trên các đáp
+              án đã tích hợp lệ
+            </p>
+            <p class="card-text">
+              - Thí sinh lưu ý quan sát màn hình (máy tính) để biết số câu hỏi
+              đã trả lời, tránh việc làm sót câu.
+            </p>
+            <button type="button" class="btn btn-primary batdau">
+              Bắt đầu bài thi
+            </button>
+          </div>
+        </div>
+      </section>
+      <section class="lambai row mt-3 col-12 col-lg-7 col-md-9 mx-auto d-none">
+        <div class="col-12 col-sm-9">
+          <div class="card">
+            <div class="card-header">
+              Làm bài thi (đề số <span class="dethi"></span>)
+            </div>
+            <div class="card-body ps-4"></div>
+          </div>
+        </div>
+        <div
+          class="mt-3 col-12 col-sm-3 d-flex flex-column justify-content-center"
+        >
+          <div class="btn btn-danger mb-3 time">00:15</div>
+          <button
+            type="button"
+            class="d-none d-sm-block btn btn-primary mb-3 bt1"
+          >
+            1. <span class="fw-3"></span>
+          </button>
+          <button
+            type="button"
+            class="d-none d-sm-block btn btn-primary mb-3 bt2"
+          >
+            2: <span class="fw-3"></span>
+          </button>
+          <button
+            type="button"
+            class="d-none d-sm-block btn btn-primary mb-3 bt3"
+          >
+            3: <span class="fw-3"></span>
+          </button>
+          <button type="button" class="btn btn-success nopbai mb-3">
+            Nộp bài
+          </button>
+        </div>
+      </section>
+    </main>
+    <div class="ketqua"></div>
+
+    <script>
+      let qa = "./qa.json";
+      let cauhoiS = 3;
+      let dethi = "";
+      let bigData = "";
+      document.getElementsByClassName("ketqua")[0].innerHTML = `
+    <div id="myModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header bg-info">
+            <strong class="mx-auto">Thông báo</strong>
+            <span class="close">&times;</span>
+        </div>
+        <div class="modal-body">
+            <p></p>
+        </div>
+    </div>
+</div>
+    `;
+
+      var modal = document.getElementById("myModal");
+      var modalContent = document.getElementsByClassName("modal-content")[0];
+      var modalBody = document.getElementsByClassName("modal-body")[0];
+      var closeBtn = document.getElementsByClassName("close")[0];
+      if (closeBtn) {
+        closeBtn.onclick = function () {
+          modal.style.display = "none";
+        };
+      }
+      let logOut = document.getElementsByClassName("logout")[0];
+      logOut.onclick = () => {
+        let confirmAction = confirm("Bạn có chắc chắn muốn đăng xuất");
+        if (confirmAction) {
+          window.onbeforeunload = null;
+          location.href = "./logout.html";
+        } else {
+        }
+      };
+
+      fetch(qa)
+        .then((respond) => respond.json())
+        .then((cauhoi) => {
+          let getDapAn = [];
+          let arrRand = Array.from(Array(cauhoi.length).keys());
+          for (let i = 0; i < cauhoiS; i++) {
+            let randNum = Math.floor(Math.random() * arrRand.length);
+            let rands = arrRand[randNum];
+            dethi += randNum;
+            arrRand.splice(randNum - 1, 1);
+            getDapAn.push(cauhoi[rands].as);
+            bigData += `
+                <div class="cauhoi">
+                    <div class="debai debai-${i + 1} mt-2 mb-1">${i + 1}. ${
+              cauhoi[rands].qs
+            }</div>
+                    <div class="form-check dapan">
+                        <input class="form-check-input" type="radio" name="dapan-${
+                          i + 1
+                        }" 
+                        id="dapan-a${i + 1}" dapan="A" value="${
+              cauhoi[rands].da
+            }">
+                        <label class="form-check-label" for="dapan-a${i + 1}">
+                            <span class="lb-dapan">A</span> ${cauhoi[rands].da}
+                        </label>
+                    </div>
+                    <div class="form-check dapan">
+                        <input class="form-check-input" type="radio" name="dapan-${
+                          i + 1
+                        }" 
+                        id="dapan-b${i + 1}" dapan="B" value="${
+              cauhoi[rands].db
+            }">
+                        <label class="form-check-label" for="dapan-b${i + 1}">
+                            <span class="lb-dapan">B</span> ${cauhoi[rands].db}
+                        </label>
+                    </div>
+                    <div class="form-check dapan">
+                        <input class="form-check-input" type="radio" name="dapan-${
+                          i + 1
+                        }" 
+                        id="dapan-c${i + 1}" dapan="C" value="${
+              cauhoi[rands].dc
+            }">
+                        <label class="form-check-label" for="dapan-c${i + 1}">
+                            <span class="lb-dapan">C</span> ${cauhoi[rands].dc}
+                        </label>
+                    </div>
+                    <div class="form-check dapan">
+                        <input class="form-check-input" type="radio" name="dapan-${
+                          i + 1
+                        }" 
+                        id="dapan-d${i + 1}" dapan="D" value="${
+              cauhoi[rands].dd
+            }">
+                        <label class="form-check-label" for="dapan-d${i + 1}">
+                            <span class="lb-dapan">D</span> ${cauhoi[rands].dd}
+                        </label>
+                    </div>
+                </div>
+                `;
+          }
+          return getDapAn;
+        })
+        .then((data) => {
+          let listDapAn = [];
+          let getTraLoi = [];
+          let dung = 0;
+          function cham() {
+            let getDapAnS = document.querySelectorAll(
+              "input[type=radio]:checked"
+            );
+            for (let giatri of getDapAnS) {
+              listDapAn.push(giatri.value);
+            }
+            data.forEach((ssDapAn, stt) => {
+              if (ssDapAn === listDapAn[stt]) {
+                dung++;
+              }
+            });
+          }
+          document.getElementsByClassName("batdau")[0].onclick = () => {
+            window.onbeforeunload = () => "";
+            document
+              .querySelector("section.baithi-noiquy")
+              .classList.add("d-none");
+            document.querySelector("span.dethi").textContent = parseInt(dethi);
+            document
+              .getElementsByClassName("lambai")[0]
+              .classList.remove("d-none");
+            document.querySelector(".lambai .card-body").innerHTML = bigData;
+            let dapan = document.querySelectorAll("input[type=radio]");
+            function startTimer(duration, display) {
+              var timer = duration,
+                minutes,
+                seconds;
+              var s = setInterval(function () {
+                minutes = parseInt(timer / 60, 10);
+                seconds = parseInt(timer % 60, 10);
+
+                minutes = minutes < 10 ? "0" + minutes : minutes;
+                seconds = seconds < 10 ? "0" + seconds : seconds;
+
+                display.textContent = minutes + ":" + seconds;
+                if (--timer < 0) {
+                  clearInterval(s);
+                  window.onbeforeunload = null;
+                  cham();
+                  modalBody.innerHTML =
+                    "<p>Hết thời gian. Hệ thống sẽ chấm điểm với các câu đã hoàn thành</p>";
+                  modal.style.display = "block";
+                  setTimeout(() => {
+                    modalBody.innerHTML += `<strong>${dung}/3 câu đúng, 
+                            ${(dung * 3.33).toFixed(0)} điểm về chỗ</strong>`;
+                    modal.style.display = "block";
+                  }, 3000);
+
+                  setTimeout(() => {
+                    window.location.reload(true);
+                  }, 8000);
+                }
+              }, 1000);
+            }
+
+            var fiveMinutes = 3 * 5 - 1,
+              display = document.querySelector(".time");
+            startTimer(fiveMinutes, display);
+
+            dapan.forEach((e, index) => {
+              e.onclick = function () {
+                document.querySelector(
+                  `.debai-${Math.floor(index / 4) + 1} span`
+                ).textContent = this.value;
+                document.querySelector(
+                  `.bt${Math.floor(index / 4) + 1} span`
+                ).textContent = this.getAttribute("dapan");
+                console.log(this.value, this.getAttribute("dapan"));
+              };
+            });
+          };
+
+          document.getElementsByClassName("nopbai")[0].onclick = () => {
+            let confirmAction = confirm("Bạn có chắc chắn muốn nộp bài?");
+            if (confirmAction) {
+              window.onbeforeunload = null;
+              cham();
+              modalBody.innerHTML =
+                "<p>Hệ thống đang chấm điểm tự động ...</p>";
+              modal.style.display = "block";
+              setTimeout(() => {
+                modalBody.innerHTML += `<strong>${dung}/3 câu đúng, 
+                    ${(dung * 3.33).toFixed(0)} điểm về chỗ</strong>`;
+                modal.style.display = "block";
+              }, 3000);
+
+              setTimeout(() => {
+                window.location.reload(true);
+              }, 8000);
+            } else {
+            }
+          };
+        });
+    </script>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

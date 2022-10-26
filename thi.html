@@ -44,7 +44,7 @@
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav ms-auto align-items-end">
             <li class="nav-item">
-              <a class="nav-link" aria-current="page" href="/">Trang chủ</a>
+              <a class="nav-link" aria-current="page" href="./">Trang chủ</a>
             </li>
             <li class="nav-item">
               <span class="nav-link active" aria-current="page">Nội quy</span>
@@ -318,6 +318,7 @@
             let confirmAction = confirm("Bạn có chắc chắn muốn nộp bài?");
             if (confirmAction) {
               window.onbeforeunload = null;
+              clearInterval(s);
               cham();
               modalBody.innerHTML =
                 "<p>Hệ thống đang chấm điểm tự động ...</p>";

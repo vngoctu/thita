@@ -171,7 +171,7 @@
         } else {
         }
       };
-
+      var s;
       fetch(qa)
         .then((respond) => respond.json())
         .then((cauhoi) => {
@@ -269,7 +269,7 @@
               var timer = duration,
                 minutes,
                 seconds;
-              var s = setInterval(function () {
+              s = setInterval(function () {
                 minutes = parseInt(timer / 60, 10);
                 seconds = parseInt(timer % 60, 10);
 
@@ -317,6 +317,7 @@
           document.getElementsByClassName("nopbai")[0].onclick = () => {
             let confirmAction = confirm("Bạn có chắc chắn muốn nộp bài?");
             if (confirmAction) {
+              clearInterval(s);
               window.onbeforeunload = null;
               cham();
               modalBody.innerHTML =

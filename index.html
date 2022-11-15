@@ -119,34 +119,32 @@
         </article>
       </section>
     </main>
-    <div class="ketqua"></div>
+    <div class="ketqua">
+      <div id="myModal" class="modal">
+        <div class="modal-content">
+          <div class="modal-header bg-info">
+            <strong class="mx-auto">Thông báo</strong>
+            <span class="close">&times;</span>
+          </div>
+          <div class="modal-body">
+            <p></p>
+          </div>
+        </div>
+      </div>
+    </div>
     <script>
       let username = document.querySelector("input[type=text]");
       username.focus();
       let password = document.querySelector("input[type=password]");
       let btnSubmit = document.querySelector("input[type=submit]");
-      let urlUsers = "./users.json";
+      let usersAPI = "./users.json";
 
-      document.getElementsByClassName("ketqua")[0].innerHTML = `
-        <div id="myModal" class="modal">
-            <div class="modal-content">
-                <div class="modal-header bg-info">
-                    <strong class="mx-auto">Thông báo</strong>
-                    <span class="close">&times;</span>
-                </div>
-                <div class="modal-body">
-                    <p></p>
-                </div>
-            </div>
-        </div>
-        `;
-
-      var modal = document.getElementById("myModal");
-      var modalContent = document.getElementsByClassName("modal-content")[0];
-      var modalBody = document.getElementsByClassName("modal-body")[0];
-      var closeBtn = document.getElementsByClassName("close")[0];
+      let modal = document.getElementById("myModal");
+      let modalContent = document.getElementsByClassName("modal-content")[0];
+      let modalBody = document.getElementsByClassName("modal-body")[0];
+      let closeBtn = document.getElementsByClassName("close")[0];
       if (closeBtn) {
-        closeBtn.onclick = function () {
+        closeBtn.onclick = () => {
           modal.style.display = "none";
         };
       }
@@ -160,22 +158,22 @@
             modal.style.display = "none";
           }, 2000);
         } else {
-          fetch(urlUsers)
+          fetch(usersAPI)
             .then((respond) => respond.json())
             .then((data) => {
               let userArr = [];
               let loginCheck = data.find((obj, i) => {
+                // tìm giá trị đã nhập so sánh với tên đăng nhập trong data
                 if (obj["username"] === username.value) {
                   if (obj.password === password.value) {
-                    console.log("abc");
                     modalBody.textContent = "Đăng nhập thành công";
                     modal.style.display = "block";
-                    localStorage.setItem("user", username.value);
+                    localStorage.setItem("user", username.value); // lưu session
                     setTimeout(() => {
                       location.href = "./thi.html";
                     }, 2000);
                   } else {
-                    modalBody.innerHTML = "Nhập sai tài khoản hoặc mật khẩu 1";
+                    modalBody.innerHTML = "Nhập sai tài khoản hoặc mật khẩu";
                     modal.style.display = "block";
                     setTimeout(() => {
                       modal.style.display = "none";

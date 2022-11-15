@@ -132,36 +132,39 @@
         </div>
       </section>
     </main>
-    <div class="ketqua"></div>
-
-    <script>
-      let qa = "./qa.json";
-      let cauhoiS = 3;
-      let dethi = "";
-      let bigData = "";
-      document.getElementsByClassName("ketqua")[0].innerHTML = `
-    <div id="myModal" class="modal">
-    <div class="modal-content">
-        <div class="modal-header bg-info">
+    <div class="ketqua">
+      <div id="myModal" class="modal">
+        <div class="modal-content">
+          <div class="modal-header bg-info">
             <strong class="mx-auto">Thông báo</strong>
             <span class="close">&times;</span>
-        </div>
-        <div class="modal-body">
+          </div>
+          <div class="modal-body">
             <p></p>
+          </div>
         </div>
+      </div>
     </div>
-</div>
-    `;
 
-      var modal = document.getElementById("myModal");
-      var modalContent = document.getElementsByClassName("modal-content")[0];
-      var modalBody = document.getElementsByClassName("modal-body")[0];
-      var closeBtn = document.getElementsByClassName("close")[0];
+    <script>
+      let qaAPI = "./qa.json"; //file json câu hỏi
+      let soCauhoi = 3; // Số câu hỏi trong 1 đề
+      let dethi = ""; // String mã đề thi
+      let renderCauhoi = ""; // Html -> render ra dữ liệu cấu hỏi
+
+      let modal = document.getElementById("myModal");
+      let modalContent = document.getElementsByClassName("modal-content")[0];
+      let modalBody = document.getElementsByClassName("modal-body")[0];
+      let closeBtn = document.getElementsByClassName("close")[0];
       if (closeBtn) {
         closeBtn.onclick = function () {
           modal.style.display = "none";
         };
       }
+
+      // rút gọn cú pháp gọi element
+      let $ = (query) => document.querySelector(query);
+
       let logOut = document.getElementsByClassName("logout")[0];
       logOut.onclick = () => {
         let confirmAction = confirm("Bạn có chắc chắn muốn đăng xuất");
@@ -171,19 +174,21 @@
         } else {
         }
       };
-      var s;
-      fetch(qa)
+      let s;
+      fetch(qaAPI)
         .then((respond) => respond.json())
         .then((cauhoi) => {
-          let getDapAn = [];
+          let getDapAn = []; // Mảng chứa đáp án
+
+          // tạo mảng theo thứ tự từ 0 đến (số câu hỏi - 1) . Mục đích để khi lấy 1 đề, số thứ tự câu hiện tại sẽ loại khỏi mảng, tránh trường hợp trùng câu hỏi khi render
           let arrRand = Array.from(Array(cauhoi.length).keys());
-          for (let i = 0; i < cauhoiS; i++) {
+          for (let i = 0; i < soCauhoi; i++) {
             let randNum = Math.floor(Math.random() * arrRand.length);
             let rands = arrRand[randNum];
             dethi += randNum;
-            arrRand.splice(randNum - 1, 1);
+            arrRand.splice(randNum - 1, 1); // loại phần tử ra khỏi mảng số thứ tự
             getDapAn.push(cauhoi[rands].as);
-            bigData += `
+            renderCauhoi += `
                 <div class="cauhoi">
                     <div class="debai debai-${i + 1} mt-2 mb-1">${i + 1}. ${
               cauhoi[rands].qs
@@ -191,7 +196,7 @@
                     <div class="form-check dapan">
                         <input class="form-check-input" type="radio" name="dapan-${
                           i + 1
-                        }" 
+                        }"
                         id="dapan-a${i + 1}" dapan="A" value="${
               cauhoi[rands].da
             }">
@@ -202,7 +207,7 @@
                     <div class="form-check dapan">
                         <input class="form-check-input" type="radio" name="dapan-${
                           i + 1
-                        }" 
+                        }"
                         id="dapan-b${i + 1}" dapan="B" value="${
               cauhoi[rands].db
             }">
@@ -213,7 +218,7 @@
                     <div class="form-check dapan">
                         <input class="form-check-input" type="radio" name="dapan-${
                           i + 1
-                        }" 
+                        }"
                         id="dapan-c${i + 1}" dapan="C" value="${
               cauhoi[rands].dc
             }">
@@ -224,7 +229,7 @@
                     <div class="form-check dapan">
                         <input class="form-check-input" type="radio" name="dapan-${
                           i + 1
-                        }" 
+                        }"
                         id="dapan-d${i + 1}" dapan="D" value="${
               cauhoi[rands].dd
             }">
@@ -238,9 +243,8 @@
           return getDapAn;
         })
         .then((data) => {
-          let listDapAn = [];
-          let getTraLoi = [];
-          let dung = 0;
+          let listDapAn = []; // danh sách đáp án của thí sinh
+          let soDung = 0; // số đáp án đúng
           function cham() {
             let getDapAnS = document.querySelectorAll(
               "input[type=radio]:checked"
@@ -248,22 +252,20 @@
             for (let giatri of getDapAnS) {
               listDapAn.push(giatri.value);
             }
-            data.forEach((ssDapAn, stt) => {
-              if (ssDapAn === listDapAn[stt]) {
-                dung++;
+            data.forEach((dung, stt) => {
+              if (dung === listDapAn[stt]) {
+                soDung++;
               }
             });
           }
           document.getElementsByClassName("batdau")[0].onclick = () => {
-            window.onbeforeunload = () => "";
-            document
-              .querySelector("section.baithi-noiquy")
-              .classList.add("d-none");
-            document.querySelector("span.dethi").textContent = parseInt(dethi);
+            window.onbeforeunload = () => ""; // Cảnh báo dữ liệu bị thay đổi khi cố tình load trang
+            $("section.baithi-noiquy").classList.add("d-none");
+            $("span.dethi").textContent = parseInt(dethi); // in ra mã đề thi
             document
               .getElementsByClassName("lambai")[0]
               .classList.remove("d-none");
-            document.querySelector(".lambai .card-body").innerHTML = bigData;
+            $(".lambai .card-body").innerHTML = renderCauhoi; // render câu hỏi
             let dapan = document.querySelectorAll("input[type=radio]");
             function startTimer(duration, display) {
               var timer = duration,
@@ -279,14 +281,14 @@
                 display.textContent = minutes + ":" + seconds;
                 if (--timer < 0) {
                   clearInterval(s);
-                  window.onbeforeunload = null;
-                  cham();
+                  window.onbeforeunload = null; // Hủy trạng thái chặn thoát trang.
+                  cham(); //chấm điểm
                   modalBody.innerHTML =
                     "<p>Hết thời gian. Hệ thống sẽ chấm điểm với các câu đã hoàn thành</p>";
                   modal.style.display = "block";
                   setTimeout(() => {
-                    modalBody.innerHTML += `<strong>${dung}/3 câu đúng, 
-                            ${(dung * 3.33).toFixed(0)} điểm về chỗ</strong>`;
+                    modalBody.innerHTML += `<strong>${soDung}/3 câu đúng,
+                            ${(soDung * 3.33).toFixed(0)} điểm về chỗ</strong>`;
                     modal.style.display = "block";
                   }, 3000);
 
@@ -298,18 +300,17 @@
             }
 
             var fiveMinutes = 3 * 5 - 1,
-              display = document.querySelector(".time");
-            startTimer(fiveMinutes, display);
+              display = $(".time");
+            startTimer(fiveMinutes, display); // render thời gian làm bài đếm ngược
 
             dapan.forEach((e, index) => {
               e.onclick = function () {
-                document.querySelector(
-                  `.debai-${Math.floor(index / 4) + 1} span`
-                ).textContent = this.value;
-                document.querySelector(
-                  `.bt${Math.floor(index / 4) + 1} span`
-                ).textContent = this.getAttribute("dapan");
-                console.log(this.value, this.getAttribute("dapan"));
+                $(`.debai-${Math.floor(index / 4) + 1} span`).textContent =
+                  this.value;
+                // số thứ tự chia 4 để tính đáp án hiện tại thuộc câu hỏi mấy. Sau đó gán text này vào dấu ... của câu hỏi
+
+                $(`.bt${Math.floor(index / 4) + 1} span`).textContent =
+                  this.getAttribute("dapan"); // lấy attribute chứa A,B,C,D tương ứng của đáp án
               };
             });
           };
@@ -324,8 +325,8 @@
                 "<p>Hệ thống đang chấm điểm tự động ...</p>";
               modal.style.display = "block";
               setTimeout(() => {
-                modalBody.innerHTML += `<strong>${dung}/3 câu đúng, 
-                    ${(dung * 3.33).toFixed(0)} điểm về chỗ</strong>`;
+                modalBody.innerHTML += `<strong>${soDung}/3 câu đúng,
+                    ${(soDung * 3.33).toFixed(0)} điểm về chỗ</strong>`; // công thức điểm làm tròn
                 modal.style.display = "block";
               }, 3000);
 

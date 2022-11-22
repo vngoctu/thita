@@ -10,6 +10,11 @@ p {
     text-indent: 30px;
 }
 
+.lam-bai .card-body {
+height: 75vh;
+overflow-y: scroll;
+}
+
 label, input[type=radio] {
   cursor: pointer;
 }
@@ -122,4 +127,7 @@ input[type=radio]:checked+label .lb-dapan {
   .modal-content {
     width: 90%;
   }
+.lam-bai .card-body {
+height: 55vh;
+}
 }

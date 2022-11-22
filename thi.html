@@ -228,7 +228,7 @@
             let randNum = Math.floor(Math.random() * arrRand.length);
             let rands = arrRand[randNum];
             dethi += randNum;
-            arrRand.splice(randNum - 1, 1); // loại phần tử ra khỏi mảng số thứ tự
+            arrRand.splice(arrRand.indexOf(randNum) - 1, 1); // loại phần tử ra khỏi mảng số thứ tự
             getDapAn.push(cauhoi[rands].as);
             renderCauhoi += `
                 <div class="cauhoi">

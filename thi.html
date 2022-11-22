@@ -73,7 +73,7 @@
               - Bài thi được tính ngay sau khi ấn nút Bắt đầu
             </p>
             <p class="card-text">
-              - Thí sinh có tổng thời gian 15 giây để trả lời 3 câu hỏi (5s/câu)
+              - Thí sinh có tổng thời gian 2 phút để trả lời 20 câu hỏi (5s/câu)
             </p>
             <p class="card-text">
               - Không được thoát ra hoặc load lại trang khi làm bài
@@ -148,7 +148,7 @@
 
     <script>
       let qaAPI = "./qa.json"; //file json câu hỏi
-      let soCauhoi = 3; // Số câu hỏi trong 1 đề
+      let soCauhoi = 20; // Số câu hỏi trong 1 đề
       let dethi = ""; // String mã đề thi
       let renderCauhoi = ""; // Html -> render ra dữ liệu cấu hỏi
 
@@ -299,7 +299,7 @@
               }, 1000);
             }
 
-            var fiveMinutes = 3 * 5 - 1,
+            var fiveMinutes = 24 * 5 - 1,
               display = $(".time");
             startTimer(fiveMinutes, display); // render thời gian làm bài đếm ngược
 

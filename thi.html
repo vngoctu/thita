@@ -73,7 +73,7 @@
               - Bài thi được tính ngay sau khi ấn nút Bắt đầu
             </p>
             <p class="card-text">
-              - Thí sinh có tổng thời gian 2 phút để trả lời 20 câu hỏi
+              - Thí sinh có tổng thời gian 1 phút để trả lời 10 câu hỏi
             </p>
             <p class="card-text">
               - Không được thoát ra hoặc load lại trang khi làm bài
@@ -99,7 +99,7 @@
         <div class="col-12 col-sm-9">
           <div class="card">
             <div class="card-header">
-              Làm bài thi (đề số <span class="dethi"></span>)
+              Làm bài thi
             </div>
             <div class="card-body ps-4"></div>
           </div>
@@ -341,7 +341,7 @@
               }, 1000);
             }
 
-            var fiveMinutes = 24 * 5 - 1,
+            var fiveMinutes = 12 * 5 - 1,
               display = $(".time");
             startTimer(fiveMinutes, display); // render thời gian làm bài đếm ngược
 
